@@ -1,5 +1,6 @@
 :root {
-    --page-width: calc(100vw - 16px);
+    --page-width: calc(100vw);
+    --content-width: calc(var(--page-width) - 16px);
     --page-bg: #a082ff;
     --setup-bg: #d7c8ff;
     --setup-text: #0a001e;
@@ -20,23 +21,16 @@ body {
     align-items: center;
     line-height: 40px;
 
-    .setup-submit {
-        display: flex;
-        height: 40px;
-        background-color: var(--setup-bg);
-        border-radius: 10px;
-        padding: 2px;
-        align-items: center;
-    }
     .select-container, .size-container {
+        --padding: 20px;
         display: inline-flex;
         height: 30px;
-        width: calc(calc(var(--page-width) / 2) - 50px);
+        width: calc(((var(--page-width) / 2) - 10px) - (var(--padding) * 2));
         align-items: center;
         justify-content: space-evenly;
         background-color: var(--setup-bg);
         border-radius: 10px;
-        padding: 20px;
+        padding: var(--padding);
         input, label {
             text-align: center;
         }
@@ -53,10 +47,20 @@ body {
             width: 5em;
         }
     }
+
+    .setup-submit {
+        display: flex;
+        height: 40px;
+        background-color: var(--setup-bg);
+        border-radius: 10px;
+        padding: 2px;
+        align-items: center;
+    }
     .matrix-type-submit {
         display: flex;
         margin: auto;
     }
+
     input, label, p {
         color: var(--setup-text);
     }
@@ -87,7 +91,7 @@ body {
     .select-container, .size-container {
         display: flex !important;
         margin: auto;
-        width: calc(var(--page-width) - 56px) !important;
+        width: calc(var(--content-width) - (var(--padding) * 2)) !important;
     }
 }
 @media (max-width: 600px) {

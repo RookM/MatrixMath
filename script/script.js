@@ -1,3 +1,12 @@
+function setupPageWidth() {
+    const root = document.querySelector(":root");
+    const clientWidth = root.clientWidth + "px";
+    root.style.setProperty("--page-width", clientWidth);
+}
+window.addEventListener("resize", () => {
+    setupPageWidth();
+});
+
 const setupMatrixInputTables = (matrixOneRows, matrixOneCols, matrixTwoRows, matrixTwoCols) => {
     const matrixTableOne = document.getElementById("matrix-one-input");
     const matrixTableTwo = document.getElementById("matrix-two-input");
