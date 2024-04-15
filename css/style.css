@@ -91,9 +91,6 @@ body {
     }
 }
 @media (max-width: 600px) {
-    .select-container, .size-container {
-        width: calc(var(--page-width) - 40px) !important;
-    }
     .select-container {
         line-height: 20px;
         text-align: center;
