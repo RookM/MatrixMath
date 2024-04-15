@@ -1,13 +1,13 @@
 :root {
-    --page-width: calc(96vw - 2em);
+    --page-width: calc(100vw - 16px);
     --page-bg: #a082ff;
     --setup-bg: #d7c8ff;
     --setup-text: #0a001e;
 }
 
 html {
+    overflow-y: scroll;
     height: 100vh;
-    width: 100vw;
 }
 body {
     background-color: var(--page-bg);
@@ -15,6 +15,7 @@ body {
 
 .setup-form {
     display: flex;
+    margin: auto;
     width: var(--page-width);
     align-items: center;
     line-height: 40px;
@@ -39,14 +40,14 @@ body {
     }
     .size-container {
         input, label, p {
-        margin: 0;
-        display: inline-block;
+            margin: 0;
+            display: inline-block;
         }
         label {
-        margin-right: 5px;
+            margin-right: 5px;
         }
         input {
-        width: 5em;
+            width: 5em;
         }
     }
     .matrix-type-submit {
@@ -68,7 +69,7 @@ body {
     .select-container, .size-container {
         display: flex !important;
         margin: auto;
-        width: var(--page-width) !important;
+        width: calc(var(--page-width) - 56px) !important;
     }
 }
 @media screen and (max-width: 1300px) {
@@ -84,5 +85,10 @@ body {
             margin-left: 40px !important;
             margin-bottom: 5px !important;
         }
+    }
+}
+@media screen and (max-width: 600px) {
+    .select-container, .size-container {
+        width: calc(var(--page-width) - 40px) !important;
     }
 }
