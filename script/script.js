@@ -18,7 +18,7 @@ const setupMatrixInputTables = (matrixOneRows, matrixOneCols, matrixTwoRows, mat
         for (let colIndex = 0; colIndex < matrixOneCols; colIndex++) {
             let currentCol = document.createElement("td");
             let currentInput = document.createElement("input");
-            let currentIndex = colIndex + "x" + rowIndex;
+            let currentIndex = "FM" + colIndex + "x" + rowIndex;
             currentInput.type = "number";
             currentInput.id = currentIndex;
             currentInput.name = currentIndex;
@@ -35,7 +35,7 @@ const setupMatrixInputTables = (matrixOneRows, matrixOneCols, matrixTwoRows, mat
         for (let colIndex = 0; colIndex < matrixTwoCols; colIndex++) {
             let currentCol = document.createElement("td");
             let currentInput = document.createElement("input");
-            let currentIndex = colIndex + "x" + rowIndex;
+            let currentIndex = "SM" + colIndex + "x" + rowIndex;
             currentInput.type = "number";
             currentInput.id = currentIndex;
             currentInput.name = currentIndex;
@@ -47,3 +47,14 @@ const setupMatrixInputTables = (matrixOneRows, matrixOneCols, matrixTwoRows, mat
         matrixTableTwo.appendChild(currentRow);
     }
 };
+
+const setupForm = document.getElementById("setup-form");
+setupForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+
+    const matrixOneRows = document.getElementById("matrix-one-rows");
+    const matrixOneCols = document.getElementById("matrix-one-cols");
+    const matrixTwoRows = document.getElementById("matrix-two-rows");
+    const matrixTwoCols = document.getElementById("matrix-two-cols");
+    setupMatrixInputTables(matrixOneRows.value, matrixOneCols.value, matrixTwoRows.value, matrixTwoCols.value);
+});

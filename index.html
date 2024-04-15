@@ -7,12 +7,12 @@
     <link href="css/style.css" rel="stylesheet" type="text/css" />
 </head>
 <body onload="setupPageWidth()">
-  <div class="setup-form" id="setup-form">
-    <form>
+  <div class="setup-form">
+    <form id="setup-form">
       <div class="setup-form-info">
         <div class="select-container">
           <div class="setup-type-select">
-            <input type="radio" class="matrix-type" id="augmented-matrix" name="matrix-type" value="Augmented Matrix"/>
+            <input type="radio" class="matrix-type" id="augmented-matrix" name="matrix-type" value="Augmented Matrix" required/>
             <label for="augmented-matrix">Augmented Matrix to RREF</label>
           </div>
           <div class="setup-type-select">
@@ -36,7 +36,7 @@
         </div>
       </div>
       <div class="setup-submit">
-        <input type="submit" class="matrix-type-submit" value="Start"/>
+        <input type="submit" class="matrix-type-submit" id="matrix-type-submit" value="Start"/>
       </div>
     </form>
   </div>
