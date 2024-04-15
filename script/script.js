@@ -1,7 +1,9 @@
 function setupPageWidth() {
     const root = document.querySelector(":root");
-    const clientWidth = root.clientWidth + "px";
-    root.style.setProperty("--page-width", clientWidth);
+    const innerWidth = window.innerWidth;
+    const scrollbarWidth = innerWidth - root.clientWidth;
+    root.style.setProperty("--page-width", innerWidth + "px");
+    root.style.setProperty("--scrollbar-width", scrollbarWidth + "px");
 }
 window.addEventListener("resize", () => {
     setupPageWidth();
