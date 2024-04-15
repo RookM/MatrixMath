@@ -37,6 +37,9 @@ body {
         background-color: var(--setup-bg);
         border-radius: 10px;
         padding: 20px;
+        input, label {
+            text-align: center;
+        }
     }
     .size-container {
         input, label, p {
@@ -82,7 +85,7 @@ body {
         line-height: 20px !important;
         label {
             display: block !important;
-            margin-left: 40px !important;
+            margin-left: 16px !important;
             margin-bottom: 5px !important;
         }
     }
@@ -90,5 +93,10 @@ body {
 @media screen and (max-width: 600px) {
     .select-container, .size-container {
         width: calc(var(--page-width) - 40px) !important;
+    }
+    .size-container {
+        input {
+            width: 3em !important;
+        }
     }
 }
