@@ -30,8 +30,11 @@ var Matrix = function(rows, cols, nums) {
     const getColCount = function() {
         return colCount;
     };
+    const getFullMatrix = function() {
+        return fullMatrix;
+    };
 
-    return { getRowCount, getColCount };
+    return { getRowCount, getColCount, getFullMatrix };
 };
 
 const setupMatrixInputTables = (matrixOneRows, matrixOneCols, matrixTwoRows, matrixTwoCols) => {
