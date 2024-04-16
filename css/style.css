@@ -81,7 +81,7 @@ body {
     }
     .matrix-one-info, .matrix-two-info {
         --padding: 20px;
-        width: calc(((var(--content-width) / 2) - 11px) - (var(--padding) * 2));
+        width: calc(((var(--content-width) / 2) - 8px) - (var(--padding) * 2));
         background-color: var(--matrix-bg);
         padding: var(--padding);
     }
@@ -98,6 +98,7 @@ body {
     }
 
     .matrix-submit {
+        width: calc((var(--content-width) - var(--scrollbar-width)) - 5px);
         display: flex;
         height: 40px;
         background-color: var(--setup-bg);
