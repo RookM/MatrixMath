@@ -48,6 +48,7 @@ const setupMatrixInputTables = (matrixOneRows, matrixOneCols, matrixTwoRows, mat
             let currentInput = document.createElement("input");
             let currentIndex = "FM" + colIndex + "x" + rowIndex;
             currentInput.type = "number";
+            currentInput.className = "fm-value";
             currentInput.id = currentIndex;
             currentInput.name = currentIndex;
             currentInput.placeholder = "";
@@ -65,6 +66,7 @@ const setupMatrixInputTables = (matrixOneRows, matrixOneCols, matrixTwoRows, mat
             let currentInput = document.createElement("input");
             let currentIndex = "SM" + colIndex + "x" + rowIndex;
             currentInput.type = "number";
+            currentInput.className = "sm-value";
             currentInput.id = currentIndex;
             currentInput.name = currentIndex;
             currentInput.placeholder = "";
@@ -76,13 +78,37 @@ const setupMatrixInputTables = (matrixOneRows, matrixOneCols, matrixTwoRows, mat
     }
 };
 
+let matrixOneRows = 0;
+let matrixOneCols = 0;
+let matrixTwoRows = 0;
+let matrixTwoCols = 0;
+const matrixOneValues = [];
+const matrixTwoValues = [];
+let matrixOneIndex = 0;
+let matrixTwoIndex = 0;
 const setupForm = document.getElementById("setup-form");
 setupForm.addEventListener("submit", (event) => {
     event.preventDefault();
 
-    const matrixOneRows = document.getElementById("matrix-one-rows");
-    const matrixOneCols = document.getElementById("matrix-one-cols");
-    const matrixTwoRows = document.getElementById("matrix-two-rows");
-    const matrixTwoCols = document.getElementById("matrix-two-cols");
-    setupMatrixInputTables(matrixOneRows.value, matrixOneCols.value, matrixTwoRows.value, matrixTwoCols.value);
+    matrixOneRows = document.getElementById("matrix-one-rows").value;
+    matrixOneCols = document.getElementById("matrix-one-cols").value;
+    matrixTwoRows = document.getElementById("matrix-two-rows").value;
+    matrixTwoCols = document.getElementById("matrix-two-cols").value;
+    setupMatrixInputTables(matrixOneRows, matrixOneCols, matrixTwoRows, matrixTwoCols);
+});
+
+const matrixForm = document.getElementById("matrix-form");
+matrixForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+
+    const allFMs = document.querySelectorAll(".fm-value");
+    allFMs.forEach((input) => {
+        matrixOneValues[matrixOneIndex] = input.value;
+        matrixOneIndex++
+    });
+    const allSMs = document.querySelectorAll(".sm-value");
+    allSMs.forEach((input) => {
+        matrixTwoValues[matrixTwoIndex] = input.value;
+        matrixTwoIndex++
+    });
 });
