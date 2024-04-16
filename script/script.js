@@ -9,6 +9,31 @@ window.addEventListener("resize", () => {
     setupPageWidth();
 });
 
+// Matrix "Class"
+var Matrix = function(rows, cols, nums) {
+    const rowCount = rows;
+    const colCount = cols;
+    const fullMatrix = [];
+    for (let rowIndex = 0; rowIndex < rowCount; rowIndex++) {
+        let currentRow = [];
+        currentRow.length = 0;
+        for (let colIndex = 0; colIndex < colCount; colIndex++) {
+            let currentIndex = (rowIndex * colCount) + colIndex;
+            currentRow[colIndex] = nums[currentIndex];
+        }
+        fullMatrix[rowIndex] = currentRow;
+    }
+
+    const getRowCount = function() {
+        return rowCount;
+    };
+    const getColCount = function() {
+        return colCount;
+    };
+
+    return { getRowCount, getColCount };
+};
+
 const setupMatrixInputTables = (matrixOneRows, matrixOneCols, matrixTwoRows, matrixTwoCols) => {
     const matrixTableOne = document.getElementById("matrix-one-input");
     const matrixTableTwo = document.getElementById("matrix-two-input");
