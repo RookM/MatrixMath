@@ -111,4 +111,7 @@ matrixForm.addEventListener("submit", (event) => {
         matrixTwoValues[matrixTwoIndex] = input.value;
         matrixTwoIndex++
     });
+    
+    const matrixOne = new Matrix(matrixOneRows, matrixOneCols, matrixOneValues);
+    const matrixTwo = new Matrix(matrixTwoRows, matrixTwoCols, matrixTwoValues);
 });
