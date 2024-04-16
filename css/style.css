@@ -69,7 +69,8 @@ body {
 
 .matrix-form {
     input {
-        width: 2em;
+        height: 20px;
+        width: 20px;
     }
 }
 

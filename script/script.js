@@ -22,7 +22,7 @@ const setupMatrixInputTables = (matrixOneRows, matrixOneCols, matrixTwoRows, mat
             currentInput.type = "number";
             currentInput.id = currentIndex;
             currentInput.name = currentIndex;
-            currentInput.placeholder = "#";
+            currentInput.placeholder = "";
             currentInput.required = true;
             currentCol.appendChild(currentInput);
             currentRow.appendChild(currentCol);
@@ -39,7 +39,7 @@ const setupMatrixInputTables = (matrixOneRows, matrixOneCols, matrixTwoRows, mat
             currentInput.type = "number";
             currentInput.id = currentIndex;
             currentInput.name = currentIndex;
-            currentInput.placeholder = "#";
+            currentInput.placeholder = "";
             currentInput.required = true;
             currentCol.appendChild(currentInput);
             currentRow.appendChild(currentCol);
