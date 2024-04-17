@@ -55,12 +55,24 @@ var Matrix = function(rows, cols, nums) {
         return "E=RA" + rowConst + "x" + rowOne + "to" + rowTwo;
     };
 
-    const getRowAfterWithLeadingValue = function(currentRowIndex, colIndex) {
-        let indexAfter = -1;
-        for (let rowIndex = (currentRowIndex + 1); rowIndex < fullMatrix.length; rowIndex++) {
+    const getLeadingIndex = function(rowIndex) {
+        let leadingIndex = -1;
+        for (let colIndex = 0; colIndex < fullMatrix[rowIndex].length; colIndex++) {
             if (fullMatrix[rowIndex][colIndex] != 0) {
-                indexAfter = rowIndex;
+                leadingIndex = colIndex;
                 break;
+            }
+        }
+        return leadingIndex;
+    };
+
+    const getHighestLeadingIndexAfter = function(currentRowIndex) {
+        let indexAfter = -1;
+        let currentLeadingIndex = getLeadingIndex(currentRowIndex);
+        for (let rowIndex = (currentRowIndex + 1); rowIndex < fullMatrix.length; rowIndex++) {
+            if (getLeadingIndex(rowIndex) < currentLeadingIndex) {
+                currentLeadingIndex = getLeadingIndex(rowIndex);
+                indexAfter = rowIndex;
             }
         }
         return indexAfter;
@@ -73,14 +85,16 @@ var Matrix = function(rows, cols, nums) {
             for (let colIndex = 0; colIndex < fullMatrix[rowIndex].length; colIndex++) {
                 // Row Swap
                 if (checkLeadingValue && fullMatrix[rowIndex][colIndex] == 0) {
-                    let rowSwapIndex = getRowAfterWithLeadingValue(rowIndex, colIndex);
+                    let rowSwapIndex = getHighestLeadingIndexAfter(rowIndex, colIndex);
                     if (rowSwapIndex != -1) {
                         checkLeadingValue = false;
-                        eString += elementaryRowSwap(rowIndex, rowSwapIndex);
+                        leadingValueIndex = colIndex;
+                        eString += elementaryRowSwap(rowIndex, rowSwapIndex) + " ";
                     }
                 }
             }
         }
+        console.log(eString);
         return fullMatrix;
     };
 
@@ -145,8 +159,6 @@ let matrixTwoRows = 0;
 let matrixTwoCols = 0;
 const matrixOneValues = [];
 const matrixTwoValues = [];
-let matrixOneIndex = 0;
-let matrixTwoIndex = 0;
 const setupForm = document.getElementById("setup-form");
 setupForm.addEventListener("submit", (event) => {
     event.preventDefault();
@@ -161,6 +173,12 @@ setupForm.addEventListener("submit", (event) => {
 const matrixForm = document.getElementById("matrix-form");
 matrixForm.addEventListener("submit", (event) => {
     event.preventDefault();
+
+    // Reset Matrices
+    matrixOneValues.length = 0;
+    matrixTwoValues.length = 0;
+    let matrixOneIndex = 0;
+    let matrixTwoIndex = 0;
 
     const allFMs = document.querySelectorAll(".fm-value");
     allFMs.forEach((input) => {
