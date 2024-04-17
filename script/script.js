@@ -49,10 +49,11 @@ var Matrix = function(rows, cols, nums) {
     };
 
     const elementaryRowAdd = function(rowConst, rowOne, rowTwo) {
+        const rowConstant = rowConst.toFixed(2);
         for (let colIndex = 0; colIndex < fullMatrix[rowTwo].length; colIndex++) {
-            fullMatrix[rowTwo][colIndex] += (fullMatrix[rowOne][colIndex] * rowConst);
+            fullMatrix[rowTwo][colIndex] += (fullMatrix[rowOne][colIndex] * rowConstant);
         }
-        return "E=RA" + rowConst + "x" + rowOne + "to" + rowTwo;
+        return "E=RA" + rowConstant + "x" + rowOne + "to" + rowTwo;
     };
 
     const getLeadingIndex = function(rowIndex) {
