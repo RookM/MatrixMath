@@ -90,8 +90,14 @@ var Matrix = function(rows, cols, nums) {
                         checkLeadingValue = false;
                         leadingValueIndex = colIndex;
                         eString += elementaryRowSwap(rowIndex, rowSwapIndex) + " ";
+                        break;
                     }
                 }
+            }
+            // If the leading value is 1, the leadingIndexInverse will be 1 too. Otherwise, it will multiply the row by the inverse of the leading value in order to make the leading value a 1.
+            let leadingIndexInverse = (1 / fullMatrix[rowIndex][getLeadingIndex(rowIndex)]);
+            if (leadingIndexInverse != 1) {
+                eString += elementaryRowConst(leadingIndexInverse, rowIndex) + " ";
             }
         }
         console.log(eString);
