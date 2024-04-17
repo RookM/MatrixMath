@@ -111,11 +111,13 @@ body {
         margin: auto;
     }
     .matrix-val-submit {
+        color: var(--matrix-text);
+        text-align: center;
         height: 2em;
         width: 8em;
     }
 
-    input {
+    .fm-value, .sm-value {
         color: var(--matrix-text);
         height: 40px;
         width: 40px;
@@ -123,7 +125,7 @@ body {
     }
 }
 
-@media (max-width: 1300px) {
+@media screen and (max-width: 1300px) {
     .setup-form-info {
         display: flex !important;
         flex-direction: row;
@@ -138,7 +140,16 @@ body {
         }
     }
 }
-@media (max-width: 950px) {
+@media screen and (max-width: 1200px) {
+    .matrix-form-info {
+        flex-direction: column !important;
+    }
+    .matrix-one-info, .matrix-two-info {
+        width: calc((var(--content-width) - var(--scrollbar-width)) - (var(--padding) * 2)) !important;
+        border-radius: 10px;
+    }
+}
+@media screen and (max-width: 950px) {
     .setup-form-info {
         flex-direction: column !important;
     }
@@ -151,7 +162,7 @@ body {
         width: calc((var(--content-width) - var(--scrollbar-width)) - (var(--padding) * 2)) !important;
     }
 }
-@media (max-width: 600px) {
+@media screen and (max-width: 600px) {
     .select-container {
         line-height: 20px;
         text-align: center;
@@ -159,6 +170,28 @@ body {
     .size-container {
         input {
             width: 3em !important;
+        }
+    }
+    .matrix-form {
+        .fm-value, .sm-value {
+            width: 20px !important;
+            height: 20px !important;
+            
+        }
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+    }
+}
+@media screen and (max-width: 300px) {
+    .matrix-form {
+        .fm-value, .sm-value {
+            width: 12px !important;
+            height: 12px !important;
+            padding: 0 !important;
+            font-size: 0.5em !important;
         }
     }
 }
