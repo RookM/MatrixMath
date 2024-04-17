@@ -36,6 +36,7 @@ var Matrix = function(rows, cols, nums) {
 
     return { getRowCount, getColCount, getFullMatrix };
 };
+
 const clearTableTRs = (table) => {
     const tableTRs = table.querySelectorAll("tr");
     tableTRs.forEach((tableRow) => {
