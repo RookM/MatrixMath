@@ -55,7 +55,25 @@ var Matrix = function(rows, cols, nums) {
         return "E=RA" + rowConst + "x" + rowOne + "to" + rowTwo;
     };
 
-    return { getRowCount, getColCount, getFullMatrix, elementaryRowSwap, elementaryRowConst, elementaryRowAdd };
+    const getRowAfterWithLeadingValue = function(currentRowIndex, colIndex) {
+        let indexAfter = -1;
+        for (let rowIndex = (currentRowIndex + 1); rowIndex < fullMatrix.length; rowIndex++) {
+            if (fullMatrix[rowIndex][colIndex] != 0) {
+                indexAfter = rowIndex;
+                break;
+            }
+        }
+        return indexAfter;
+    };
+
+    const gaussianElimination = function() {
+        if (fullMatrix[0][0] == 0) {
+            const indexSwap = getRowAfterWithLeadingValue(0, 0);
+            console.log(indexSwap);
+        }
+    };
+
+    return { getRowCount, getColCount, getFullMatrix, elementaryRowSwap, elementaryRowConst, elementaryRowAdd, gaussianElimination };
 };
 
 const clearTableTRs = (table) => {
@@ -146,6 +164,5 @@ matrixForm.addEventListener("submit", (event) => {
     
     const matrixOne = new Matrix(matrixOneRows, matrixOneCols, matrixOneValues);
     const matrixTwo = new Matrix(matrixTwoRows, matrixTwoCols, matrixTwoValues);
-    console.log(matrixOne.elementaryRowAdd(3, 0, 1));
-    console.log(matrixOne.getFullMatrix());
+    matrixOne.gaussianElimination();
 });
