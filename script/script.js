@@ -83,6 +83,7 @@ const setupMatrixInputTables = (matrixOneRows, matrixOneCols, matrixTwoRows, mat
             currentInput.name = currentIndex;
             currentInput.placeholder = "";
             currentInput.required = true;
+            currentInput.style.setProperty("--column-count", matrixOneCols);
             currentCol.appendChild(currentInput);
             currentRow.appendChild(currentCol);
         }
@@ -101,6 +102,7 @@ const setupMatrixInputTables = (matrixOneRows, matrixOneCols, matrixTwoRows, mat
             currentInput.name = currentIndex;
             currentInput.placeholder = "";
             currentInput.required = true;
+            currentInput.style.setProperty("--column-count", matrixTwoCols);
             currentCol.appendChild(currentInput);
             currentRow.appendChild(currentCol);
         }
