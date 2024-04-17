@@ -43,17 +43,18 @@ var Matrix = function(rows, cols, nums) {
 
     const elementaryRowConst = function(rowConst, rowOne) {
         for (let colIndex = 0; colIndex < fullMatrix[rowOne].length; colIndex++) {
-            fullMatrix[rowOne][colIndex] *= rowConst;
+            if (fullMatrix[rowOne][colIndex] != 0) {
+                fullMatrix[rowOne][colIndex] *= rowConst;
+            } 
         }
         return "E=RC" + rowConst + "x" + rowOne;
     };
 
     const elementaryRowAdd = function(rowConst, rowOne, rowTwo) {
-        const rowConstant = rowConst.toFixed(2);
         for (let colIndex = 0; colIndex < fullMatrix[rowTwo].length; colIndex++) {
-            fullMatrix[rowTwo][colIndex] += (fullMatrix[rowOne][colIndex] * rowConstant);
+            fullMatrix[rowTwo][colIndex] += (fullMatrix[rowOne][colIndex] * rowConst);
         }
-        return "E=RA" + rowConstant + "x" + rowOne + "to" + rowTwo;
+        return "E=RA" + rowConst + "x" + rowOne + "to" + rowTwo;
     };
 
     const getLeadingIndex = function(rowIndex) {
@@ -69,9 +70,10 @@ var Matrix = function(rows, cols, nums) {
 
     const getHighestLeadingIndexAfter = function(currentRowIndex) {
         let indexAfter = -1;
-        let currentLeadingIndex = getLeadingIndex(currentRowIndex);
+        // Checks if the leading index exists
+        let currentLeadingIndex = (getLeadingIndex(currentRowIndex) != -1) ? getLeadingIndex(currentRowIndex) : colCount;
         for (let rowIndex = (currentRowIndex + 1); rowIndex < fullMatrix.length; rowIndex++) {
-            if (getLeadingIndex(rowIndex) < currentLeadingIndex) {
+            if (getLeadingIndex(rowIndex) != -1 && getLeadingIndex(rowIndex) < currentLeadingIndex) {
                 currentLeadingIndex = getLeadingIndex(rowIndex);
                 indexAfter = rowIndex;
             }
@@ -79,34 +81,42 @@ var Matrix = function(rows, cols, nums) {
         return indexAfter;
     };
 
-    const gaussianElimination = function() {
+    const reducedRowEchelon = function() {
         let eString = "";
         for (let rowIndex = 0; rowIndex < fullMatrix.length; rowIndex++) {
-            let checkLeadingValue = true;
-            for (let colIndex = 0; colIndex < fullMatrix[rowIndex].length; colIndex++) {
-                // Row Swap
-                if (checkLeadingValue && fullMatrix[rowIndex][colIndex] == 0) {
-                    let rowSwapIndex = getHighestLeadingIndexAfter(rowIndex, colIndex);
-                    if (rowSwapIndex != -1) {
-                        checkLeadingValue = false;
-                        leadingValueIndex = colIndex;
-                        eString += elementaryRowSwap(rowIndex, rowSwapIndex) + " ";
-                        break;
+            // Row Swap
+            let rowSwapIndex = getHighestLeadingIndexAfter(rowIndex);
+            if (rowSwapIndex != -1) {
+                checkLeadingValue = false;
+                eString += elementaryRowSwap(rowIndex, rowSwapIndex) + " ";
+            }
+
+            let leadingIndex = getLeadingIndex(rowIndex);
+
+            if (leadingIndex != -1) {
+                // Row Const
+                // If the leading value is 1, the leadingIndexInverse will be 1 too. Otherwise, it will multiply the row by the inverse of the leading value in order to make the leading value a 1.
+                let leadingIndexInverse = (1 / fullMatrix[rowIndex][leadingIndex]);
+                if (leadingIndexInverse != 1) {
+                    eString += elementaryRowConst(leadingIndexInverse, rowIndex) + " ";
+                }
+
+                // Row Add
+                for (let newRowIndex = 0; newRowIndex < fullMatrix.length; newRowIndex++) {
+                    if (newRowIndex != rowIndex) {
+                        let subtractValue = fullMatrix[newRowIndex][leadingIndex] * -1;
+                        if (subtractValue != 0) {
+                            eString += elementaryRowAdd(subtractValue, rowIndex, newRowIndex) + " ";
+                        }
                     }
                 }
-            }
-            // Row Const
-            // If the leading value is 1, the leadingIndexInverse will be 1 too. Otherwise, it will multiply the row by the inverse of the leading value in order to make the leading value a 1.
-            let leadingIndexInverse = (1 / fullMatrix[rowIndex][getLeadingIndex(rowIndex)]);
-            if (leadingIndexInverse != 1) {
-                eString += elementaryRowConst(leadingIndexInverse, rowIndex) + " ";
             }
         }
         console.log(eString);
         return fullMatrix;
     };
 
-    return { getRowCount, getColCount, getFullMatrix, elementaryRowSwap, elementaryRowConst, elementaryRowAdd, gaussianElimination };
+    return { getRowCount, getColCount, getFullMatrix, elementaryRowSwap, elementaryRowConst, elementaryRowAdd, reducedRowEchelon };
 };
 
 const clearTableTRs = (table) => {
@@ -201,5 +211,5 @@ matrixForm.addEventListener("submit", (event) => {
     
     const matrixOne = new Matrix(matrixOneRows, matrixOneCols, matrixOneValues);
     const matrixTwo = new Matrix(matrixTwoRows, matrixTwoCols, matrixTwoValues);
-    console.log(matrixOne.gaussianElimination());
+    console.log(matrixOne.reducedRowEchelon());
 });
