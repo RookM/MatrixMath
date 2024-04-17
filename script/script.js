@@ -67,10 +67,21 @@ var Matrix = function(rows, cols, nums) {
     };
 
     const gaussianElimination = function() {
-        if (fullMatrix[0][0] == 0) {
-            const indexSwap = getRowAfterWithLeadingValue(0, 0);
-            console.log(indexSwap);
+        let eString = "";
+        for (let rowIndex = 0; rowIndex < fullMatrix.length; rowIndex++) {
+            let checkLeadingValue = true;
+            for (let colIndex = 0; colIndex < fullMatrix[rowIndex].length; colIndex++) {
+                // Row Swap
+                if (checkLeadingValue && fullMatrix[rowIndex][colIndex] == 0) {
+                    let rowSwapIndex = getRowAfterWithLeadingValue(rowIndex, colIndex);
+                    if (rowSwapIndex != -1) {
+                        checkLeadingValue = false;
+                        eString += elementaryRowSwap(rowIndex, rowSwapIndex);
+                    }
+                }
+            }
         }
+        return fullMatrix;
     };
 
     return { getRowCount, getColCount, getFullMatrix, elementaryRowSwap, elementaryRowConst, elementaryRowAdd, gaussianElimination };
@@ -164,5 +175,5 @@ matrixForm.addEventListener("submit", (event) => {
     
     const matrixOne = new Matrix(matrixOneRows, matrixOneCols, matrixOneValues);
     const matrixTwo = new Matrix(matrixTwoRows, matrixTwoCols, matrixTwoValues);
-    matrixOne.gaussianElimination();
+    console.log(matrixOne.gaussianElimination());
 });
