@@ -94,6 +94,7 @@ var Matrix = function(rows, cols, nums) {
                     }
                 }
             }
+            // Row Const
             // If the leading value is 1, the leadingIndexInverse will be 1 too. Otherwise, it will multiply the row by the inverse of the leading value in order to make the leading value a 1.
             let leadingIndexInverse = (1 / fullMatrix[rowIndex][getLeadingIndex(rowIndex)]);
             if (leadingIndexInverse != 1) {
