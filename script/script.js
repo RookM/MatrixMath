@@ -36,10 +36,18 @@ var Matrix = function(rows, cols, nums) {
 
     return { getRowCount, getColCount, getFullMatrix };
 };
+const clearTableTRs = (table) => {
+    const tableTRs = table.querySelectorAll("tr");
+    tableTRs.forEach((tableRow) => {
+        tableRow.remove();
+    });
+};
 
 const setupMatrixInputTables = (matrixOneRows, matrixOneCols, matrixTwoRows, matrixTwoCols) => {
     const matrixTableOne = document.getElementById("matrix-one-input");
     const matrixTableTwo = document.getElementById("matrix-two-input");
+    clearTableTRs(matrixTableOne);
+    clearTableTRs(matrixTableTwo);
 
     for (let rowIndex = 0; rowIndex < matrixOneRows; rowIndex++) {
         let currentRow = document.createElement("tr");
