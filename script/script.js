@@ -19,7 +19,7 @@ var Matrix = function(rows, cols, nums) {
         currentRow.length = 0;
         for (let colIndex = 0; colIndex < colCount; colIndex++) {
             let currentIndex = (rowIndex * colCount) + colIndex;
-            currentRow[colIndex] = nums[currentIndex];
+            currentRow[colIndex] = parseInt(nums[currentIndex]);
         }
         fullMatrix[rowIndex] = currentRow;
     }
