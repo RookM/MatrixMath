@@ -34,7 +34,28 @@ var Matrix = function(rows, cols, nums) {
         return fullMatrix;
     };
 
-    return { getRowCount, getColCount, getFullMatrix };
+    const elementaryRowSwap = function(rowOne, rowTwo) {
+        const temporaryRow = fullMatrix[rowOne];
+        fullMatrix[rowOne] = fullMatrix[rowTwo];
+        fullMatrix[rowTwo] = temporaryRow;
+        return "E=RS" + rowOne + "to" + rowTwo;
+    };
+
+    const elementaryRowConst = function(rowConst, rowOne) {
+        for (let colIndex = 0; colIndex < fullMatrix[rowOne].length; colIndex++) {
+            fullMatrix[rowOne][colIndex] *= rowConst;
+        }
+        return "E=RC" + rowConst + "x" + rowOne;
+    };
+
+    const elementaryRowAdd = function(rowConst, rowOne, rowTwo) {
+        for (let colIndex = 0; colIndex < fullMatrix[rowTwo].length; colIndex++) {
+            fullMatrix[rowTwo][colIndex] += (fullMatrix[rowOne][colIndex] * rowConst);
+        }
+        return "E=RA" + rowConst + "x" + rowOne + "to" + rowTwo;
+    };
+
+    return { getRowCount, getColCount, getFullMatrix, elementaryRowSwap, elementaryRowConst, elementaryRowAdd };
 };
 
 const clearTableTRs = (table) => {
@@ -123,4 +144,6 @@ matrixForm.addEventListener("submit", (event) => {
     
     const matrixOne = new Matrix(matrixOneRows, matrixOneCols, matrixOneValues);
     const matrixTwo = new Matrix(matrixTwoRows, matrixTwoCols, matrixTwoValues);
+    console.log(matrixOne.elementaryRowAdd(3, 0, 1));
+    console.log(matrixOne.getFullMatrix());
 });
