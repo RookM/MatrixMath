@@ -24,7 +24,7 @@ window.addEventListener("resize", () => {
 });
 
 // Matrix "Class"
-var Matrix = function(rows, cols, nums) {
+var Matrix = function(rows, cols, nums, decimal) {
     const rowCount = rows;
     const colCount = cols;
     const fullMatrix = [];
@@ -37,6 +37,7 @@ var Matrix = function(rows, cols, nums) {
         }
         fullMatrix[rowIndex] = currentRow;
     }
+    const decimalPosition = decimal;
 
     const getRowCount = function() {
         return rowCount;
@@ -77,23 +78,21 @@ var Matrix = function(rows, cols, nums) {
     };
 
     const elementaryRowConst = function(rowConst, rowOne) {
-        const rowConstant = roundNumber(rowConst, 4);
         for (let colIndex = 0; colIndex < fullMatrix[rowOne].length; colIndex++) {
             if (fullMatrix[rowOne][colIndex] != 0) {
-                let newValue = (fullMatrix[rowOne][colIndex] * rowConstant);
-                fullMatrix[rowOne][colIndex] = roundNumber(newValue, 2);
+                let newValue = (fullMatrix[rowOne][colIndex] * rowConst);
+                fullMatrix[rowOne][colIndex] = newValue;
             } 
         }
-        return "E=RC" + rowConstant + "x" + rowOne;
+        return "E=RC" + rowConst + "x" + rowOne;
     };
 
     const elementaryRowAdd = function(rowConst, rowOne, rowTwo) {
-        const rowConstant = roundNumber(rowConst, 4);
         for (let colIndex = 0; colIndex < fullMatrix[rowTwo].length; colIndex++) {
-            let newValue = (fullMatrix[rowTwo][colIndex] + (fullMatrix[rowOne][colIndex] * rowConstant));
-            fullMatrix[rowTwo][colIndex] = roundNumber(newValue, 2);
+            let newValue = (fullMatrix[rowTwo][colIndex] + (fullMatrix[rowOne][colIndex] * rowConst));
+            fullMatrix[rowTwo][colIndex] = newValue;
         }
-        return "E=RA" + rowConstant + "x" + rowOne + "to" + rowTwo;
+        return "E=RA" + rowConst + "x" + rowOne + "to" + rowTwo;
     };
 
     const getLeadingIndex = function(rowIndex) {
@@ -129,6 +128,8 @@ var Matrix = function(rows, cols, nums) {
                 checkLeadingValue = false;
                 eString += elementaryRowSwap(rowIndex, rowSwapIndex) + " ";
             }
+            console.log(eString);
+            console.log(matrixToString());
 
             let leadingIndex = getLeadingIndex(rowIndex);
 
@@ -139,6 +140,8 @@ var Matrix = function(rows, cols, nums) {
                 if (leadingIndexInverse != 1) {
                     eString += elementaryRowConst(leadingIndexInverse, rowIndex) + " ";
                 }
+                console.log(eString);
+                console.log(matrixToString());
 
                 // Row Add
                 for (let newRowIndex = 0; newRowIndex < fullMatrix.length; newRowIndex++) {
@@ -149,15 +152,22 @@ var Matrix = function(rows, cols, nums) {
                         }
                     }
                 }
+                console.log(eString);
+                console.log(matrixToString());
             }
-            console.log(eString);
-            console.log(matrixToString());
         }
-        console.log(eString);
-        return fullMatrix;
+        return eString;
     };
 
-    return { getRowCount, getColCount, getFullMatrix, elementaryRowSwap, elementaryRowConst, elementaryRowAdd, reducedRowEchelon };
+    const augmentedCalculations = function(eString){
+        const eValues = eString.split(" ");
+        for (let eIndex = 0; eIndex < eValues.length; eIndex++) {
+            let eType = eValues[eIndex].substring(3, 4);
+            console.log(eType);
+        }
+    };
+
+    return { getRowCount, getColCount, getFullMatrix, elementaryRowSwap, elementaryRowConst, elementaryRowAdd, reducedRowEchelon, augmentedCalculations };
 };
 
 const clearTableTRs = (table) => {
@@ -250,7 +260,8 @@ matrixForm.addEventListener("submit", (event) => {
         matrixTwoIndex++
     });
     
-    const matrixOne = new Matrix(matrixOneRows, matrixOneCols, matrixOneValues);
-    const matrixTwo = new Matrix(matrixTwoRows, matrixTwoCols, matrixTwoValues);
-    console.log(matrixOne.reducedRowEchelon());
+    const matrixOne = new Matrix(matrixOneRows, matrixOneCols, matrixOneValues, 8);
+    const matrixTwo = new Matrix(matrixTwoRows, matrixTwoCols, matrixTwoValues, 8);
+    let eString = matrixOne.reducedRowEchelon();
+    matrixTwo.augmentedCalculations(eString);
 });
