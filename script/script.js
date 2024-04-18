@@ -24,7 +24,7 @@ window.addEventListener("resize", () => {
 });
 
 // Matrix "Class"
-var Matrix = function(rows, cols, nums, decimal) {
+var Matrix = function(rows, cols, nums) {
     const rowCount = rows;
     const colCount = cols;
     const fullMatrix = [];
@@ -37,7 +37,6 @@ var Matrix = function(rows, cols, nums, decimal) {
         }
         fullMatrix[rowIndex] = currentRow;
     }
-    const decimalPosition = decimal;
 
     const getRowCount = function() {
         return rowCount;
@@ -163,7 +162,22 @@ var Matrix = function(rows, cols, nums, decimal) {
         const eValues = eString.split(" ");
         for (let eIndex = 0; eIndex < eValues.length; eIndex++) {
             let eType = eValues[eIndex].substring(3, 4);
-            console.log(eType);
+            let eValue = eValues[eIndex].substring(4);
+            if (eType == "S") {
+                let rowOne = parseInt(eValue.split("to")[0]);
+                let rowTwo = parseInt(eValue.split("to")[1]);
+                elementaryRowSwap(rowOne, rowTwo);
+            } else if (eType == "C") {
+                let rowConst = parseFloat(eValue.split("x")[0]);
+                let rowOne = parseInt(eValue.split("x")[1]);
+                elementaryRowConst(rowConst, rowOne);
+            } else if (eType == "A") {
+                let rowConst = parseFloat(eValue.split("to")[0].split("x")[0]);
+                let rowOne = parseInt(eValue.split("to")[0].split("x")[1]);
+                let rowTwo = parseInt(eValue.split("to")[1]);
+                elementaryRowAdd(rowConst, rowOne, rowTwo);
+            } 
+            console.log(matrixToString());
         }
     };
 
@@ -260,8 +274,8 @@ matrixForm.addEventListener("submit", (event) => {
         matrixTwoIndex++
     });
     
-    const matrixOne = new Matrix(matrixOneRows, matrixOneCols, matrixOneValues, 8);
-    const matrixTwo = new Matrix(matrixTwoRows, matrixTwoCols, matrixTwoValues, 8);
+    const matrixOne = new Matrix(matrixOneRows, matrixOneCols, matrixOneValues);
+    const matrixTwo = new Matrix(matrixTwoRows, matrixTwoCols, matrixTwoValues);
     let eString = matrixOne.reducedRowEchelon();
     matrixTwo.augmentedCalculations(eString);
 });
