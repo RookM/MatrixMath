@@ -1,3 +1,17 @@
+function roundNumber(num, decimalPlaces) {
+    const modifier = (num >= 0) ? 1 : -1;
+    const number = num * modifier;
+    const eNotation = number + "e" + decimalPlaces;
+    const roundedNumber = Math.round(eNotation);
+    const unNotation = roundedNumber + "e" + (decimalPlaces * -1);
+    const result = Number(unNotation) * modifier;
+    if (result == -0) {
+        return 0;
+    } else {
+        return result;
+    } 
+}
+
 function setupPageWidth() {
     const root = document.querySelector(":root");
     const innerWidth = window.innerWidth;
@@ -34,6 +48,27 @@ var Matrix = function(rows, cols, nums) {
         return fullMatrix;
     };
 
+    const matrixToString = function() {
+        let matrixString = "[";
+        for (let rowIndex = 0; rowIndex < rowCount; rowIndex++) {
+            for (let colIndex = 0; colIndex < colCount; colIndex++) {
+                if (colIndex == 0 && rowIndex == 0) {
+                    matrixString += fullMatrix[rowIndex][colIndex] + "," 
+                } else if (colIndex == (colCount - 1) && rowIndex == (rowCount - 1)) {
+                    matrixString += " " + fullMatrix[rowIndex][colIndex];
+                } else if (colIndex == (colCount - 1)) {
+                    matrixString += " " + fullMatrix[rowIndex][colIndex] + "\n";
+                } else {
+                    matrixString += " " + fullMatrix[rowIndex][colIndex] + ",";
+                }
+            }
+            if (rowIndex == (rowCount - 1)) {
+                matrixString += "]";
+            }
+        }
+        return matrixString;
+    };
+
     const elementaryRowSwap = function(rowOne, rowTwo) {
         const temporaryRow = fullMatrix[rowOne];
         fullMatrix[rowOne] = fullMatrix[rowTwo];
@@ -42,19 +77,23 @@ var Matrix = function(rows, cols, nums) {
     };
 
     const elementaryRowConst = function(rowConst, rowOne) {
+        const rowConstant = roundNumber(rowConst, 4);
         for (let colIndex = 0; colIndex < fullMatrix[rowOne].length; colIndex++) {
             if (fullMatrix[rowOne][colIndex] != 0) {
-                fullMatrix[rowOne][colIndex] *= rowConst;
+                let newValue = (fullMatrix[rowOne][colIndex] * rowConstant);
+                fullMatrix[rowOne][colIndex] = roundNumber(newValue, 2);
             } 
         }
-        return "E=RC" + rowConst + "x" + rowOne;
+        return "E=RC" + rowConstant + "x" + rowOne;
     };
 
     const elementaryRowAdd = function(rowConst, rowOne, rowTwo) {
+        const rowConstant = roundNumber(rowConst, 4);
         for (let colIndex = 0; colIndex < fullMatrix[rowTwo].length; colIndex++) {
-            fullMatrix[rowTwo][colIndex] += (fullMatrix[rowOne][colIndex] * rowConst);
+            let newValue = (fullMatrix[rowTwo][colIndex] + (fullMatrix[rowOne][colIndex] * rowConstant));
+            fullMatrix[rowTwo][colIndex] = roundNumber(newValue, 2);
         }
-        return "E=RA" + rowConst + "x" + rowOne + "to" + rowTwo;
+        return "E=RA" + rowConstant + "x" + rowOne + "to" + rowTwo;
     };
 
     const getLeadingIndex = function(rowIndex) {
@@ -111,6 +150,8 @@ var Matrix = function(rows, cols, nums) {
                     }
                 }
             }
+            console.log(eString);
+            console.log(matrixToString());
         }
         console.log(eString);
         return fullMatrix;
