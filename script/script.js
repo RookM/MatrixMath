@@ -33,7 +33,7 @@ var Matrix = function(rows, cols, nums) {
         currentRow.length = 0;
         for (let colIndex = 0; colIndex < colCount; colIndex++) {
             let currentIndex = (rowIndex * colCount) + colIndex;
-            currentRow[colIndex] = parseInt(nums[currentIndex]);
+            currentRow[colIndex] = parseFloat(nums[currentIndex]);
         }
         fullMatrix[rowIndex] = currentRow;
     }
@@ -53,7 +53,11 @@ var Matrix = function(rows, cols, nums) {
         for (let rowIndex = 0; rowIndex < rowCount; rowIndex++) {
             for (let colIndex = 0; colIndex < colCount; colIndex++) {
                 if (colIndex == 0 && rowIndex == 0) {
-                    matrixString += fullMatrix[rowIndex][colIndex] + "," 
+                    if (colIndex == (colCount - 1) && rowIndex == (rowCount - 1)) {
+                        matrixString += fullMatrix[rowIndex][colIndex];
+                    } else {
+                        matrixString += fullMatrix[rowIndex][colIndex] + ",";
+                    }
                 } else if (colIndex == (colCount - 1) && rowIndex == (rowCount - 1)) {
                     matrixString += " " + fullMatrix[rowIndex][colIndex];
                 } else if (colIndex == (colCount - 1)) {
@@ -209,6 +213,7 @@ const setupMatrixInputTables = (matrixOneRows, matrixOneCols, matrixTwoRows, mat
             currentInput.name = currentIndex;
             currentInput.placeholder = "";
             currentInput.required = true;
+            currentInput.step = "0.01";
             currentInput.style.setProperty("--column-count", matrixOneCols);
             currentCol.appendChild(currentInput);
             currentRow.appendChild(currentCol);
@@ -228,6 +233,7 @@ const setupMatrixInputTables = (matrixOneRows, matrixOneCols, matrixTwoRows, mat
             currentInput.name = currentIndex;
             currentInput.placeholder = "";
             currentInput.required = true;
+            currentInput.step = "0.01";
             currentInput.style.setProperty("--column-count", matrixTwoCols);
             currentCol.appendChild(currentInput);
             currentRow.appendChild(currentCol);
