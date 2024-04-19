@@ -73,6 +73,14 @@ var Matrix = function(rows, cols, nums) {
         return matrixString;
     };
 
+    const roundMatrix = function(decimalPosition) {
+        for (let rowIndex = 0; rowIndex < fullMatrix.length; rowIndex++) {
+            for (let colIndex = 0; colIndex < fullMatrix[rowIndex].length; colIndex++) {
+                fullMatrix[rowIndex][colIndex] = roundNumber(fullMatrix[rowIndex][colIndex], decimalPosition);
+            }
+        }
+    };
+
     const elementaryRowSwap = function(rowOne, rowTwo) {
         const temporaryRow = fullMatrix[rowOne];
         fullMatrix[rowOne] = fullMatrix[rowTwo];
@@ -131,8 +139,6 @@ var Matrix = function(rows, cols, nums) {
                 checkLeadingValue = false;
                 eString += elementaryRowSwap(rowIndex, rowSwapIndex) + " ";
             }
-            console.log(eString);
-            console.log(matrixToString());
 
             let leadingIndex = getLeadingIndex(rowIndex);
 
@@ -143,8 +149,6 @@ var Matrix = function(rows, cols, nums) {
                 if (leadingIndexInverse != 1) {
                     eString += elementaryRowConst(leadingIndexInverse, rowIndex) + " ";
                 }
-                console.log(eString);
-                console.log(matrixToString());
 
                 // Row Add
                 for (let newRowIndex = 0; newRowIndex < fullMatrix.length; newRowIndex++) {
@@ -155,10 +159,10 @@ var Matrix = function(rows, cols, nums) {
                         }
                     }
                 }
-                console.log(eString);
-                console.log(matrixToString());
             }
         }
+        roundMatrix(4);
+        console.log(matrixToString());
         return eString;
     };
 
@@ -180,9 +184,10 @@ var Matrix = function(rows, cols, nums) {
                 let rowOne = parseInt(eValue.split("to")[0].split("x")[1]);
                 let rowTwo = parseInt(eValue.split("to")[1]);
                 elementaryRowAdd(rowConst, rowOne, rowTwo);
-            } 
-            console.log(matrixToString());
+            }
         }
+        roundMatrix(4);
+        console.log(matrixToString());
     };
 
     return { getRowCount, getColCount, getFullMatrix, elementaryRowSwap, elementaryRowConst, elementaryRowAdd, reducedRowEchelon, augmentedCalculations };
