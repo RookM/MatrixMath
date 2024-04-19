@@ -190,7 +190,39 @@ var Matrix = function(rows, cols, nums) {
         console.log(matrixToString());
     };
 
-    return { getRowCount, getColCount, getFullMatrix, elementaryRowSwap, elementaryRowConst, elementaryRowAdd, reducedRowEchelon, augmentedCalculations };
+    const multiplyWith = function(matrix) {
+        const otherMatrix = matrix.getFullMatrix();
+
+        const multipliedNums = [];
+        multipliedNums.length = 0;
+        let numIndex = 0;
+
+        const formerHeight = fullMatrix.length;
+        const formerWidth = fullMatrix[0].length;
+        const latterHeight = otherMatrix.length;
+        const latterWidth = otherMatrix[0].length;
+
+        if (formerWidth != latterHeight) {
+            multipliedNums[0] = 0;
+            const multipliedMatrix = new Matrix(1, 1, multipliedNums);
+            return multipliedMatrix;
+        } else {
+            for (let rowIndex = 0; rowIndex < formerHeight; rowIndex++) {
+                for (let colIndex = 0; colIndex < latterWidth; colIndex++) {
+                    let posValue = 0;
+                    for (let posIndex = 0; posIndex < formerWidth; posIndex++) {
+                        posValue += fullMatrix[rowIndex][posIndex] * otherMatrix[posIndex][colIndex];
+                    }
+                    multipliedNums[numIndex] = posValue;
+                    numIndex++;
+                }
+            }
+            const multipliedMatrix = new Matrix(formerHeight, latterWidth, multipliedNums);
+            return multipliedMatrix;
+        }
+    };
+
+    return { getRowCount, getColCount, getFullMatrix, matrixToString, elementaryRowSwap, elementaryRowConst, elementaryRowAdd, reducedRowEchelon, augmentedCalculations, multiplyWith };
 };
 
 const clearTableTRs = (table) => {
@@ -287,6 +319,7 @@ matrixForm.addEventListener("submit", (event) => {
     
     const matrixOne = new Matrix(matrixOneRows, matrixOneCols, matrixOneValues);
     const matrixTwo = new Matrix(matrixTwoRows, matrixTwoCols, matrixTwoValues);
-    let eString = matrixOne.reducedRowEchelon();
-    matrixTwo.augmentedCalculations(eString);
+    // let eString = matrixOne.reducedRowEchelon();
+    // matrixTwo.augmentedCalculations(eString);
+    console.log(matrixOne.multiplyWith(matrixTwo).matrixToString());
 });
