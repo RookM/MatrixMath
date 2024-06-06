@@ -1,64 +1,122 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <link href="css/style.css" rel="stylesheet" type="text/css" />
-</head>
-<body onload="setupPageWidth()">
-  <div class="setup-form">
-    <form id="setup-form">
-      <div class="setup-form-info">
-        <div class="select-container">
-          <div class="setup-type-select">
-            <input type="radio" class="matrix-type" id="augmented-matrix" name="matrix-type" value="Augmented Matrix" required/>
-            <label for="augmented-matrix">Augmented Matrix to RREF</label>
+  </head>
+  <body onload="setupPageWidth()">
+    <div class="setup-form">
+      <form id="setup-form">
+        <div class="setup-form-info">
+          <div class="select-container">
+            <div class="setup-type-select">
+              <input
+                type="radio"
+                class="matrix-type"
+                id="augmented-matrix"
+                name="matrix-type"
+                value="Augmented Matrix"
+                required
+              />
+              <label for="augmented-matrix">Augmented Matrix to RREF</label>
+            </div>
+            <div class="setup-type-select">
+              <input
+                type="radio"
+                class="matrix-type"
+                id="multiplied-matrix"
+                name="matrix-type"
+                value="Multiplied Matrix"
+              />
+              <label for="multiplied-matrix">Matrix Multiplication</label>
+            </div>
           </div>
-          <div class="setup-type-select">
-            <input type="radio" class="matrix-type" id="multiplied-matrix" name="matrix-type" value="Multiplied Matrix"/>
-            <label for="multiplied-matrix">Matrix Multiplication</label>
+          <div class="size-container">
+            <div class="size-select">
+              <label for="matrix-one-rows">Matrix One:</label>
+              <input
+                type="number"
+                id="matrix-one-rows"
+                name="matrix-one-rows"
+                placeholder="Rows"
+                min="1"
+                max="10"
+                required
+              />
+              <p>x</p>
+              <input
+                type="number"
+                id="matrix-one-cols"
+                name="matrix-one-cols"
+                placeholder="Cols"
+                min="1"
+                max="10"
+                required
+              />
+            </div>
+            <div class="size-select">
+              <label for="matrix-two-rows">Matrix Two:</label>
+              <input
+                type="number"
+                id="matrix-two-rows"
+                name="matrix-two-rows"
+                placeholder="Rows"
+                min="1"
+                max="10"
+                required
+              />
+              <p>x</p>
+              <input
+                type="number"
+                id="matrix-two-cols"
+                name="matrix-two-cols"
+                placeholder="Cols"
+                min="1"
+                max="10"
+                required
+              />
+            </div>
           </div>
         </div>
-        <div class="size-container">
-          <div class="size-select">
-            <label for="matrix-one-rows">Matrix One:</label>
-            <input type="number" id="matrix-one-rows" name="matrix-one-rows" placeholder="Rows" min="1" max="10" required/>
-            <p>x</p>
-            <input type="number" id="matrix-one-cols" name="matrix-one-cols" placeholder="Cols" min="1" max="10" required/>
-          </div>
-          <div class="size-select">
-            <label for="matrix-two-rows">Matrix Two:</label>
-            <input type="number" id="matrix-two-rows" name="matrix-two-rows" placeholder="Rows" min="1" max="10" required/>
-            <p>x</p>
-            <input type="number" id="matrix-two-cols" name="matrix-two-cols" placeholder="Cols" min="1" max="10" required/>
+        <div class="setup-submit">
+          <div class="setup-submit-button">
+            <input
+              type="submit"
+              class="setup-type-submit"
+              id="setup-type-submit"
+              value="Start"
+            />
           </div>
         </div>
-      </div>
-      <div class="setup-submit">
-        <div class="setup-submit-button">
-          <input type="submit" class="setup-type-submit" id="setup-type-submit" value="Start"/>
+      </form>
+    </div>
+    <div class="matrix-form" id="matrix-form">
+      <form>
+        <div class="matrix-form-info">
+          <div class="matrix-one-info">
+            <table class="matrix-one-input" id="matrix-one-input"></table>
+          </div>
+          <div class="matrix-two-info">
+            <table class="matrix-two-input" id="matrix-two-input"></table>
+          </div>
         </div>
-      </div>
-    </form>
-  </div>
-  <div class="matrix-form" id="matrix-form">
-    <form>
-      <div class="matrix-form-info">
-        <div class="matrix-one-info">
-          <table class="matrix-one-input" id="matrix-one-input"></table>
+        <div class="matrix-submit">
+          <div class="matrix-submit-button">
+            <input
+              type="submit"
+              class="matrix-val-submit"
+              id="matrix-val-submit"
+              value="Calculate"
+            />
+          </div>
         </div>
-        <div class="matrix-two-info">
-          <table class="matrix-two-input" id="matrix-two-input"></table>
-        </div>
-      </div>
-      <div class="matrix-submit">
-        <div class="matrix-submit-button">
-          <input type="submit" class="matrix-val-submit" id="matrix-val-submit" value="Calculate"/>
-        </div>
-      </div>
-    </form>
-  </div>
-  <script src="script/script.js"></script>
-</body>
+      </form>
+    </div>
+    <div class="matrix-solution">
+      <table class="matrix-solution-table" id="matrix-solution-table"></table>
+    </div>
+    <script src="script/script.js"></script>
+  </body>
 </html>
