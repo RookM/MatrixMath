@@ -356,6 +356,7 @@ setupForm.addEventListener("submit", (event) => {
 
 const matrixForm = document.getElementById("matrix-form");
 const matrixResponseTable = document.getElementById("matrix-solution-table");
+const matrixAugmentedTable = document.getElementById("matrix-augmented-table");
 matrixForm.addEventListener("submit", (event) => {
   event.preventDefault();
 
@@ -364,6 +365,8 @@ matrixForm.addEventListener("submit", (event) => {
   matrixTwoValues.length = 0;
   let matrixOneIndex = 0;
   let matrixTwoIndex = 0;
+  clearTableTRs(matrixResponseTable);
+  clearTableTRs(matrixAugmentedTable);
 
   const allFMs = document.querySelectorAll(".fm-value");
   allFMs.forEach((input) => {
@@ -378,30 +381,80 @@ matrixForm.addEventListener("submit", (event) => {
 
   const matrixOne = new Matrix(matrixOneRows, matrixOneCols, matrixOneValues);
   const matrixTwo = new Matrix(matrixTwoRows, matrixTwoCols, matrixTwoValues);
-  let fullMatrixOne = matrixOne.getFullMatrix();
-  let fullMatrixTwo = matrixTwo.getFullMatrix();
   if (doRREF) {
     let eString = matrixOne.reducedRowEchelon();
     matrixTwo.augmentedCalculations(eString);
+    let fullMatrixOne = matrixOne.getFullMatrix();
+    let fullMatrixTwo = matrixTwo.getFullMatrix();
+
+    matrixAugmentedTable.style.display = "block";
     for (
       let matrixRowIndex = 0;
       matrixRowIndex < matrixOne.getRowCount();
       matrixRowIndex++
     ) {
-      let currentTableRow = document.createElement("tr");
+      let currentTableOneRow = document.createElement("tr");
       for (
         let matrixOneColIndex = 0;
         matrixOneColIndex < matrixOne.getColCount();
         matrixOneColIndex++
       ) {
-        let currentTableData = document.createElement("td");
-        currentTableData.innerHTML =
+        let currentTableOneData = document.createElement("td");
+        currentTableOneData.innerHTML =
           fullMatrixOne[matrixRowIndex][matrixOneColIndex];
-        currentTableRow.appendChild(currentTableData);
+        currentTableOneData.className = "fm-value";
+        currentTableOneData.style.setProperty(
+          "--column-count",
+          matrixOne.getColCount()
+        );
+        currentTableOneRow.appendChild(currentTableOneData);
       }
-      matrixResponseTable.appendChild(currentTableRow);
+      matrixResponseTable.appendChild(currentTableOneRow);
+      let currentTableTwoRow = document.createElement("tr");
+      for (
+        let matrixTwoColIndex = 0;
+        matrixTwoColIndex < matrixTwo.getColCount();
+        matrixTwoColIndex++
+      ) {
+        let currentTableTwoData = document.createElement("td");
+        currentTableTwoData.innerHTML =
+          fullMatrixTwo[matrixRowIndex][matrixTwoColIndex];
+        currentTableTwoData.className = "sm-value";
+        currentTableTwoData.style.setProperty(
+          "--column-count",
+          matrixTwo.getColCount()
+        );
+        currentTableTwoRow.appendChild(currentTableTwoData);
+      }
+      matrixAugmentedTable.appendChild(currentTableTwoRow);
     }
   } else {
-    matrixOne.multiplyWith(matrixTwo);
+    const multipliedMatrix = matrixOne.multiplyWith(matrixTwo);
+    let fullMatrix = multipliedMatrix.getFullMatrix();
+
+    matrixAugmentedTable.style.display = "none";
+    for (
+      let matrixRowIndex = 0;
+      matrixRowIndex < multipliedMatrix.getRowCount();
+      matrixRowIndex++
+    ) {
+      let currentTableOneRow = document.createElement("tr");
+      for (
+        let matrixOneColIndex = 0;
+        matrixOneColIndex < multipliedMatrix.getColCount();
+        matrixOneColIndex++
+      ) {
+        let currentTableOneData = document.createElement("td");
+        currentTableOneData.innerHTML =
+          fullMatrix[matrixRowIndex][matrixOneColIndex];
+        currentTableOneData.className = "fm-value";
+        currentTableOneData.style.setProperty(
+          "--column-count",
+          matrixOne.getColCount()
+        );
+        currentTableOneRow.appendChild(currentTableOneData);
+      }
+      matrixResponseTable.appendChild(currentTableOneRow);
+    }
   }
 });
