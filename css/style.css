@@ -139,6 +139,7 @@ body {
 
 .matrix-solution {
   margin-top: 40px;
+  margin-bottom: 40px;
   display: flex;
   flex-direction: row;
   --padding: 20px;
@@ -163,6 +164,8 @@ body {
     height: min(var(--size), 40px);
     width: min(var(--size), 40px);
     text-align: center;
+    background-color: white;
+    border: 1px solid black;
   }
 }
 
@@ -182,7 +185,8 @@ body {
   }
 }
 @media screen and (max-width: 1200px) {
-  .matrix-form-info {
+  .matrix-form-info,
+  .matrix-solution {
     flex-direction: column !important;
   }
   .matrix-one-info,
