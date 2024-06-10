@@ -185,7 +185,6 @@ var Matrix = function (rows, cols, nums) {
       }
     }
     roundMatrix(4);
-    console.log(matrixToString());
     return eString;
   };
 
@@ -210,7 +209,6 @@ var Matrix = function (rows, cols, nums) {
       }
     }
     roundMatrix(4);
-    console.log(matrixToString());
   };
 
   const multiplyWith = function (matrix) {
