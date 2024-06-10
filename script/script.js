@@ -383,6 +383,7 @@ matrixForm.addEventListener("submit", (event) => {
   const matrixTwo = new Matrix(matrixTwoRows, matrixTwoCols, matrixTwoValues);
   if (doRREF) {
     let eString = matrixOne.reducedRowEchelon();
+    console.log(eString);
     matrixTwo.augmentedCalculations(eString);
     let fullMatrixOne = matrixOne.getFullMatrix();
     let fullMatrixTwo = matrixTwo.getFullMatrix();
