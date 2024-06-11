@@ -164,7 +164,7 @@ var Matrix = function (rows, cols, nums) {
         // Row Const
         // If the leading value is 1, the leadingIndexInverse will be 1 too. Otherwise, it will multiply the row by the inverse of the leading value in order to make the leading value a 1.
         let leadingIndexInverse = 1 / fullMatrix[rowIndex][leadingIndex];
-        if (leadingIndexInverse != 1) {
+        if (!Number.isNaN(leadingIndexInverse) && leadingIndexInverse != 1) {
           eString += elementaryRowConst(leadingIndexInverse, rowIndex) + " ";
         }
 
@@ -182,6 +182,14 @@ var Matrix = function (rows, cols, nums) {
             }
           }
         }
+      }
+    }
+    for (let rowIndex = 0; rowIndex < fullMatrix.length; rowIndex++) {
+      // Row Swap
+      let rowSwapIndex = getHighestLeadingIndexAfter(rowIndex);
+      if (rowSwapIndex != -1) {
+        checkLeadingValue = false;
+        eString += elementaryRowSwap(rowIndex, rowSwapIndex) + " ";
       }
     }
     roundMatrix(4);
